@@ -29,7 +29,7 @@ Refer to screenshots provided to style your application UI accordingly.
 1a)     Perform Search and Display Results
         -------------------------------------
         Given user is focused on search bar
-        When clicked on search button OR press enter
+        When user click on search button OR press enter
         Then search results should be fetched
         AND results should be displayed in correct format
         AND matching terms in results content should be highlighted
@@ -48,7 +48,7 @@ Refer to screenshots provided to style your application UI accordingly.
 2a)     Typeahead Suggestion Dropdown
         -------------------------------------
         Given user is focused on search bar
-        When type > 2 character is typed in search bar
+        When user types > 2 character in search bar
         Then suggestion dropdown should appear showing top 6 results
 ```
 
