@@ -17,7 +17,7 @@ Develop a frontend web application, listed under User Stories below, to search f
 
 ## Mock Ups
 
-https://www.figma.com/file/YiunXUOh7Pp8eERCpFmm0C/SearchSG-Design?node-id=1184%3A34346
+https://www.figma.com/file/mjn0tcgy7dU9iQTfE3uvYe/Developer-Application?node-id=0%3A1
 
 ## User Stories
 
