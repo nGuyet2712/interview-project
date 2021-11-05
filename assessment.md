@@ -112,6 +112,6 @@ We will assess your submission holistically (i.e. not just in terms of functiona
 
 You should be able to complete this assessment within 8-10 hours.
 
-When you have completed your assignment, before the given deadline, please upload your solution to a public git respository and submit to us (at d3hiring@gmail.com) a link to your code repository.
+When you have completed your assignment, before the given deadline, please upload your solution to a public git respository and submit to us (at ops-nprod@search.gov.sg) a link to your code repository.
 
-If you have any queries, feel free to post them to d3hiring@gmail.com.
+If you have any queries, feel free to post them to ops-nprod@search.gov.sg.
