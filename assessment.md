@@ -37,7 +37,7 @@ Refer to screenshots provided to style your application UI accordingly.
 
 \*\* Use the following Search API endpoint to fetch mocked search result data to complete your task.
 
-- HTTP GET https://gist.githubusercontent.com/yuhong90/b5544baebde4bfe9fe2d12e8e5502cbf/raw/e026dab444155edf2f52122aefbb80347c68de86/queryResult.json
+- HTTP GET https://gist.githubusercontent.com/yuhong90/b5544baebde4bfe9fe2d12e8e5502cbf/raw/44deafab00fc808ed7fa0e59a8bc959d255b9785/queryResult.json
 - Note that above mocked api response will be static.
 
 ### Task 2: As a user, I want to see suggestions in the search bar
