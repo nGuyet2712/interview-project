@@ -90,7 +90,7 @@ Refer to screenshots provided to style your application UI accordingly.
 
 ## Requirements/Expectations
 
-- Please use ReactJS to complete this technical assessment.
+- Please use ReactJS & Typescript to complete this technical assessment.
 - Your code repository should contain a `README.md` that includes the following:
 
   - Setup instructions on how to build / run your application; we need to minimally be able to launch and test your solution locally
