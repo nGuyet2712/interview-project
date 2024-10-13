@@ -11,7 +11,7 @@ function AppLayout() {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fetchSearchResults = async () => {
+  const handleSearch = async () => {
     setIsLoading(true);
     try {
       const data = await fetchResults();
@@ -20,10 +20,6 @@ function AppLayout() {
       console.error("Error fetching search results:", error);
     }
     setIsLoading(false);
-  };
-
-  const handleSearch = () => {
-    fetchSearchResults();
   };
 
   const handleInputChange = (value: string) => {
