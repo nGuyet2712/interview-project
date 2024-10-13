@@ -6,7 +6,9 @@ import fetchResults, { ResultsResponse } from "../services/resultService";
 
 function AppLayout() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<ResultsResponse[]>([]);
+  const [searchResults, setSearchResults] = useState<ResultsResponse | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchSearchResults = async () => {
@@ -42,11 +44,7 @@ function AppLayout() {
         onInputChange={handleInputChange}
         onSearch={handleSearch}
       />
-      <ResultsList
-        results={searchResults}
-        isLoading={isLoading}
-        searchTerm={searchTerm}
-      />
+      <ResultsList results={searchResults} isLoading={isLoading} />
     </div>
   );
 }
