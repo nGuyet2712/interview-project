@@ -2,7 +2,7 @@ interface SuggestionsResponse {
   suggestions: string[];
 }
 
-export const fetchSuggestions = async () => {
+const fetchSuggestions = async () => {
   const url =
     "https://gist.githubusercontent.com/yuhong90/b5544baebde4bfe9fe2d12e8e5502cbf/raw/e026dab444155edf2f52122aefbb80347c68de86/suggestion.json";
 
@@ -21,3 +21,5 @@ export const fetchSuggestions = async () => {
     return { suggestions: [] };
   }
 };
+
+export default fetchSuggestions;

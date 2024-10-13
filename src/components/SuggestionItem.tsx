@@ -16,7 +16,9 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({
       className={`p-2 cursor-pointer ${
         index === selectedIndex ? "bg-blue-100" : ""
       }`}
-      onClick={() => selectSuggestion(suggestion)}
+      onClick={() => {
+        selectSuggestion(suggestion);
+      }}
     >
       {suggestion}
     </li>
