@@ -25,13 +25,9 @@ const ResultsList = ({ results, isLoading }: ResultsListProps) => {
     <div className="md:px-[160px] sm:px-[80px] px-[30px] bg-white">
       <p className="font-semibold text-[22px]">
         {results
-          ? results.TotalNumberOfResults < 100
-            ? `Showing ${results.TotalNumberOfResults || 0}-${
-                results.TotalNumberOfResults
-              } of ${results.TotalNumberOfResults} results`
-            : `Showing ${(results.Page - 1) * 10 + 1}-${results.Page * 10} of ${
-                results.TotalNumberOfResults
-              } results`
+          ? `Showing ${results.TotalNumberOfResults ? 1 : 0}-${
+              results.TotalNumberOfResults
+            } of ${results.TotalNumberOfResults} results`
           : ""}
       </p>
       {results?.ResultItems.map((item) => (

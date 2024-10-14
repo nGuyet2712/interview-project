@@ -45,9 +45,18 @@ const highlightText = (
 const ResultItem = ({ item }: ResultItemProps) => {
   return (
     <div className="my-10">
-      <h3 className="text-[22px] font-semibold text-[#1C76D5]">
-        {highlightText(item.DocumentTitle.Text, item.DocumentTitle.Highlights)}
-      </h3>
+      <a
+        href={item.DocumentURI}
+        target="_blank"
+        className="text-sm text-[#686868]"
+      >
+        <h3 className="text-[22px] font-semibold text-[#1C76D5] hover:underline">
+          {highlightText(
+            item.DocumentTitle.Text,
+            item.DocumentTitle.Highlights
+          )}
+        </h3>{" "}
+      </a>
 
       <p className="my-3">
         {highlightText(
@@ -61,7 +70,7 @@ const ResultItem = ({ item }: ResultItemProps) => {
         target="_blank"
         className="text-sm text-[#686868]"
       >
-        https://services.life.gov.sg/government-services/buy-hdb/
+        {item.DocumentURI}
       </a>
     </div>
   );
