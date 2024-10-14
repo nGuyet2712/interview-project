@@ -7,7 +7,7 @@ import fetchSuggestions from "../services/suggestionService";
 interface SearchBarProps {
   searchTerm: string;
   onInputChange: (value: string) => void;
-  onSearch: () => void;
+  onSearch: (value: string) => void;
 }
 
 function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
@@ -17,9 +17,8 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
     useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const searchButtonRef = useRef<HTMLButtonElement | null>(null);
-  const [dropdownWidth, setDropdownWidth] = useState<string | number>("100%");
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [isSuggestionSelected, setIsSuggestionSelected] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +41,9 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
       setIsLoadingSuggestions(true);
       fetchSuggestions()
         .then((data) => setSuggestions(data.suggestions))
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          throw new Error(error);
+        })
         .finally(() => setIsLoadingSuggestions(false));
     } else {
       setSuggestions([]);
@@ -58,33 +59,16 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
       );
     } else if (e.key === "Enter") {
       if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+        onSearch(suggestions[selectedIndex]);
         onInputChange(suggestions[selectedIndex]);
-        setShowSuggestions(false);
         setSelectedIndex(-1);
         setIsSuggestionSelected(true);
-      } else {
-        onSearch();
-        setShowSuggestions(false);
+      } else if (searchTerm.length > 2) {
+        onSearch(searchTerm);
       }
+      setShowSuggestions(false);
     }
   };
-
-  const calculateDropdownWidth = () => {
-    if (inputRef.current && searchButtonRef.current) {
-      const inputWidth = inputRef.current.offsetWidth;
-      const buttonWidth = searchButtonRef.current.offsetWidth;
-      setDropdownWidth(inputWidth - buttonWidth);
-    }
-  };
-
-  useEffect(() => {
-    calculateDropdownWidth();
-    window.addEventListener("resize", calculateDropdownWidth);
-
-    return () => {
-      window.removeEventListener("resize", calculateDropdownWidth);
-    };
-  }, []);
 
   return (
     <div className="md:px-[160px] sm:px-[80px] px-[30px] py-12 text-lg shadow-lg">
@@ -101,7 +85,15 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
         />
         {searchTerm.length > 0 && (
           <button
-            onClick={() => onInputChange("")}
+            onClick={() => {
+              onInputChange("");
+              setSelectedIndex(-1);
+              setShowSuggestions(false);
+              setIsSuggestionSelected(false);
+              if (inputRef.current) {
+                inputRef.current.focus();
+              }
+            }}
             className="absolute right-32 top-1/2 transform -translate-y-1/2"
           >
             <img src={XIcon} alt="Clear" className="h-6 w-6" />
@@ -109,8 +101,14 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
         )}
         <button
           ref={searchButtonRef}
-          className="absolute right-0 top-0 h-14 bg-[#1C76D5] text-white rounded-xl px-4 py-2 flex items-center"
-          onClick={onSearch}
+          className="absolute right-0 top-0 h-14 w-28 bg-[#1C76D5] text-white rounded-xl px-4 py-2 flex items-center"
+          onClick={() => {
+            if (searchTerm.length > 0) {
+              onSearch(searchTerm);
+            }
+            setShowSuggestions(false);
+            setIsSuggestionSelected(false);
+          }}
         >
           <img
             src={SearchIcon}
@@ -119,37 +117,33 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
           />
           Search
         </button>
+        {showSuggestions && (
+          <>
+            {isLoadingSuggestions ? (
+              <ul className="absolute w-[calc(100%-7rem)] top-[55px] bg-white border rounded-b-xl shadow-sm z-10 px-2">
+                {[...Array(6)].map((_, index) => (
+                  <li
+                    className="w-full h-4 bg-gray-300 rounded animate-pulse my-6"
+                    key={index}
+                  ></li>
+                ))}
+              </ul>
+            ) : (
+              <SuggestionDropdown
+                suggestions={suggestions}
+                selectedIndex={selectedIndex}
+                selectSuggestion={(suggestion) => {
+                  onInputChange(suggestion);
+                  setShowSuggestions(false);
+                  setSelectedIndex(-1);
+                  setIsSuggestionSelected(true);
+                }}
+                onSearch={onSearch}
+              />
+            )}
+          </>
+        )}
       </div>
-
-      {showSuggestions && (
-        <div style={{ width: dropdownWidth }}>
-          {isLoadingSuggestions ? (
-            <ul
-              className="absolute bg-white border rounded-b-xl shadow-sm z-10 px-2"
-              style={{ width: dropdownWidth }}
-            >
-              {[...Array(6)].map((_, index) => (
-                <li
-                  className="w-3/4 h-4 bg-gray-300 rounded animate-pulse my-6"
-                  key={index}
-                ></li>
-              ))}
-            </ul>
-          ) : (
-            <SuggestionDropdown
-              suggestions={suggestions}
-              selectedIndex={selectedIndex}
-              selectSuggestion={(suggestion) => {
-                onInputChange(suggestion);
-                setShowSuggestions(false);
-                setSelectedIndex(-1);
-                setIsSuggestionSelected(true);
-              }}
-              dropdownWidth={dropdownWidth}
-            />
-          )}
-        </div>
-      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ interface SuggestionItemProps {
   index: number;
   selectedIndex: number;
   selectSuggestion: (suggestion: string) => void;
+  onSearch: (value: string) => void;
 }
 
 const SuggestionItem: React.FC<SuggestionItemProps> = ({
@@ -10,6 +11,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({
   index,
   selectedIndex,
   selectSuggestion,
+  onSearch,
 }) => {
   return (
     <li
@@ -18,6 +20,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({
       }`}
       onClick={() => {
         selectSuggestion(suggestion);
+        onSearch(suggestion);
       }}
     >
       {suggestion}
