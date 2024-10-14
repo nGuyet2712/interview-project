@@ -3,15 +3,26 @@ import SuggestionItem from "./SuggestionItem";
 interface SuggestionDropdownProps {
   suggestions: string[];
   selectedIndex: number;
-  selectSuggestion: (suggestion: string) => void;
+  onSelectSuggestion: (suggestion: string) => void;
   onSearch: (value: string) => void;
   input: string;
 }
 
+/**
+ * Represent a suggestion dropdown component.
+ * @component
+ * @param {string[]} props.suggestions - The list of suggestions.
+ * @param {number} props.selectedIndex - The index of selected suggestion.
+ * @param {function} props.onSelectSuggestion - The select suggestion action.
+ * @param {function} props.onSearch - The search action.
+ * @param {string} props.input - The debounced term.
+
+ * @returns {React.ReactElement} A list of suggestions.
+ */
 const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   suggestions,
   selectedIndex,
-  selectSuggestion,
+  onSelectSuggestion,
   onSearch,
   input,
 }) => {
@@ -23,7 +34,7 @@ const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
           suggestion={suggestion}
           index={index}
           selectedIndex={selectedIndex}
-          selectSuggestion={selectSuggestion}
+          onSelectSuggestion={onSelectSuggestion}
           onSearch={onSearch}
           input={input}
         />
