@@ -5,6 +5,7 @@ interface SuggestionDropdownProps {
   selectedIndex: number;
   selectSuggestion: (suggestion: string) => void;
   onSearch: (value: string) => void;
+  input: string;
 }
 
 const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
@@ -12,6 +13,7 @@ const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   selectedIndex,
   selectSuggestion,
   onSearch,
+  input,
 }) => {
   return (
     <ul className="absolute w-[calc(100%-7rem)] top-[55px] bg-white border rounded-b-xl shadow-sm z-10">
@@ -23,6 +25,7 @@ const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
           selectedIndex={selectedIndex}
           selectSuggestion={selectSuggestion}
           onSearch={onSearch}
+          input={input}
         />
       ))}
     </ul>

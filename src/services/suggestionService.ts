@@ -1,4 +1,4 @@
-interface SuggestionsResponse {
+export interface SuggestionsResponse {
   suggestions: string[];
 }
 

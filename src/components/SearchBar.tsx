@@ -4,6 +4,7 @@ import SearchIcon from "../../public/icons/search.svg";
 import SuggestionDropdown from "./SuggestionsDropdown";
 import fetchSuggestions from "../services/suggestionService";
 import Skeleton from "./Skeleton";
+import suggestionFilter from "../mock/filter/suggestionFilter";
 
 interface SearchBarProps {
   searchTerm: string;
@@ -38,17 +39,24 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (debouncedSearchTerm.length > 2 && !isSuggestionSelected) {
-      setIsLoadingSuggestions(true);
-      fetchSuggestions()
-        .then((data) => setSuggestions(data.suggestions))
-        .catch((error) => {
-          throw new Error(error);
-        })
-        .finally(() => setIsLoadingSuggestions(false));
-    } else {
-      setSuggestions([]);
-    }
+    const fetchSuggestionsAsync = async () => {
+      if (debouncedSearchTerm.length > 2 && !isSuggestionSelected) {
+        setIsLoadingSuggestions(true);
+        try {
+          const data = await fetchSuggestions();
+          const filteredData = suggestionFilter(data, debouncedSearchTerm);
+          setSuggestions(filteredData);
+        } catch (error) {
+          console.error("Error fetching suggestions:", error);
+        } finally {
+          setIsLoadingSuggestions(false);
+        }
+      } else {
+        setSuggestions([]);
+      }
+    };
+
+    fetchSuggestionsAsync();
   }, [debouncedSearchTerm, isSuggestionSelected]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -137,6 +145,7 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
                   setIsSuggestionSelected(true);
                 }}
                 onSearch={onSearch}
+                input={debouncedSearchTerm}
               />
             )}
           </>
