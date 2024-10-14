@@ -4,12 +4,14 @@ interface SuggestionDropdownProps {
   suggestions: string[];
   selectedIndex: number;
   selectSuggestion: (suggestion: string) => void;
+  onSearch: (value: string) => void;
 }
 
 const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   suggestions,
   selectedIndex,
   selectSuggestion,
+  onSearch,
 }) => {
   return (
     <ul className="absolute w-[calc(100%-7rem)] top-[55px] bg-white border rounded-b-xl shadow-sm z-10">
@@ -20,6 +22,7 @@ const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
           index={index}
           selectedIndex={selectedIndex}
           selectSuggestion={selectSuggestion}
+          onSearch={onSearch}
         />
       ))}
     </ul>

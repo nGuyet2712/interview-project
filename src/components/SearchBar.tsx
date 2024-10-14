@@ -64,6 +64,8 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
         onInputChange(suggestions[selectedIndex]);
         setSelectedIndex(-1);
         setIsSuggestionSelected(true);
+      } else if (searchTerm.length > 2) {
+        onSearch(searchTerm);
       }
       setShowSuggestions(false);
     }
@@ -134,6 +136,7 @@ function SearchBar({ searchTerm, onInputChange, onSearch }: SearchBarProps) {
                   setSelectedIndex(-1);
                   setIsSuggestionSelected(true);
                 }}
+                onSearch={onSearch}
               />
             )}
           </>

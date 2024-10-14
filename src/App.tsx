@@ -35,8 +35,6 @@ function App() {
         TotalNumberOfResults: filteredResults.length,
         ResultItems: filteredResults,
       });
-
-      console.log(term);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
