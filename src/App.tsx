@@ -3,6 +3,7 @@ import AppLayout from "./layouts/AppLayout";
 import ResultsList from "./pages/result-page/index";
 import fetchResults, { ResultsResponse } from "./services/resultService";
 import SearchBar from "./components/SearchBar";
+import resultFilter from "./mock/filter/resultFilter";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -20,15 +21,7 @@ function App() {
     try {
       const data = await fetchResults();
 
-      const filteredResults = data.ResultItems.filter(
-        (item) =>
-          item.DocumentTitle.Text.toLowerCase().includes(
-            term?.toLowerCase() || searchTerm.toLowerCase()
-          ) ||
-          item.DocumentExcerpt.Text.toLowerCase().includes(
-            term?.toLowerCase() || searchTerm.toLowerCase()
-          )
-      );
+      const filteredResults = resultFilter(data, term, searchTerm);
 
       setSearchResults({
         ...data,
