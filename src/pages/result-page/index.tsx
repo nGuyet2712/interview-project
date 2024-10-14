@@ -7,36 +7,44 @@ interface ResultsListProps {
   isLoading: boolean;
 }
 
-const ResultsList = ({ results, isLoading }: ResultsListProps) => {
-  if (isLoading) {
-    return (
-      <div className="md:px-[160px] sm:px-[80px] px-[30px] bg-white">
-        <p className="h-6 w-[250px] bg-gray-300 rounded mb-16" />
-        <ul className="space-y-12">
-          {[...Array(8)].map((_, index) => (
-            <Skeleton key={index} />
-          ))}
-        </ul>
-      </div>
-    );
-  }
-
+/**
+ * Display a list of search results.
+ * @component
+ * @param {Object} props.results - The results data.
+ * @param {boolean} props.isLoading - The loading state.
+ * @returns {React.ReactElement} Render the list of results or a loading skeleton.
+ */
+const ResultsList = ({
+  results,
+  isLoading,
+}: ResultsListProps): React.ReactElement => {
   return (
     <div className="md:px-[160px] sm:px-[80px] px-[30px] bg-white">
-      <p className="font-semibold text-[22px]">
-        {results
-          ? results.TotalNumberOfResults < 100
-            ? `Showing ${results.TotalNumberOfResults || 0}-${
-                results.TotalNumberOfResults
-              } of ${results.TotalNumberOfResults} results`
-            : `Showing ${(results.Page - 1) * 10 + 1}-${results.Page * 10} of ${
-                results.TotalNumberOfResults
-              } results`
-          : ""}
-      </p>
-      {results?.ResultItems.map((item) => (
-        <ResultItem key={item.DocumentId} item={item} />
-      ))}
+      {isLoading ? (
+        <>
+          <p className="h-6 w-[250px] bg-gray-300 rounded mb-16" />
+          <ul className="space-y-12">
+            {[...Array(8)].map((_, index) => (
+              <Skeleton key={index} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <>
+          <p className="font-semibold text-[22px]">
+            {results
+              ? `Showing ${results.TotalNumberOfResults ? 1 : 0} - ${
+                  results.TotalNumberOfResults
+                } of ${results.TotalNumberOfResults} results`
+              : ""}
+          </p>
+          <ul className="space-y-12">
+            {results?.ResultItems.map((item) => (
+              <ResultItem key={item.DocumentId} item={item} />
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };

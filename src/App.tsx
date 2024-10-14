@@ -3,6 +3,7 @@ import AppLayout from "./layouts/AppLayout";
 import ResultsList from "./pages/result-page/index";
 import fetchResults, { ResultsResponse } from "./services/resultService";
 import SearchBar from "./components/SearchBar";
+import resultFilter from "./mock/filter/resultFilter";
 
 /**
  * Represent app structure.
@@ -32,11 +33,7 @@ function App(): React.ReactElement {
     try {
       const data = await fetchResults();
 
-      const filteredResults = data.ResultItems.filter(
-        (item) =>
-          item.DocumentTitle.Text.toLowerCase().includes(term.toLowerCase()) ||
-          item.DocumentExcerpt.Text.toLowerCase().includes(term.toLowerCase())
-      );
+      const filteredResults = resultFilter(data, term);
 
       setSearchResults({
         ...data,

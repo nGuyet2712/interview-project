@@ -5,7 +5,14 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
-function AppLayout({ children }: AppLayoutProps) {
+/**
+ * Render a header section with a logo and government text, followed by the content
+ * provided as children.
+ * @component
+ * @param {ReactNode} props.children - The child elements that will be rendered within the layout.
+ * @returns {React.ReactElement} The rendered app layout element.
+ */
+function AppLayout({ children }: AppLayoutProps): React.ReactElement {
   return (
     <div>
       <div className="md:px-[160px] sm:px-[80px] px-[30px] flex gap-[8px] py-[4px] bg-[#F0F0F0]">
