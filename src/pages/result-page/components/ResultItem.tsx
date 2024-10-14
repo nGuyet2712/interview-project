@@ -13,6 +13,18 @@ interface ResultItemProps {
   };
 }
 
+/*
+  Highlight text based on highlights object.
+  1. Check if the highlights array is empty or undefined. If it is, the function simply returns the original text without any modifications.
+  2. If highlights exist, initialize an empty array `highlightedText` to store the different parts of the final text (both normal and highlighted).
+  3. Set a variable `lastIndex` to 0, which keeps track of the current position in the text.
+  4. For each highlight object:
+     a. Push the non-highlighted part of the text (from `lastIndex` to `BeginOffset`) into the `highlightedText` array.
+     b. Push the highlighted portion of the text (from `BeginOffset` to `EndOffset`) wrapped in a `<span>` tag, which applies the class `font-bold` to make the text bold.
+     c. Update `lastIndex` to `EndOffset` to mark the end of the current highlighted segment.
+  5. After processing all the highlights, push the remaining unhighlighted portion of the text (if any) into the `highlightedText` array.
+  6. Return the `highlightedText` array, which contains a mix of plain text and highlighted spans.
+*/
 const highlightText = (
   text: string,
   highlights: { BeginOffset: number; EndOffset: number }[]
@@ -42,6 +54,12 @@ const highlightText = (
   return highlightedText;
 };
 
+/**
+ * Display a list of search results.
+ * @component
+ * @param {Object} props.item - The results item.
+ * @returns {React.ReactElement} Render the list of results or a loading skeleton.
+ */
 const ResultItem = ({ item }: ResultItemProps) => {
   return (
     <div className="my-10">
@@ -55,7 +73,7 @@ const ResultItem = ({ item }: ResultItemProps) => {
             item.DocumentTitle.Text,
             item.DocumentTitle.Highlights
           )}
-        </h3>{" "}
+        </h3>
       </a>
 
       <p className="my-3">
