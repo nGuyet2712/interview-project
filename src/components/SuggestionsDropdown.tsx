@@ -4,20 +4,15 @@ interface SuggestionDropdownProps {
   suggestions: string[];
   selectedIndex: number;
   selectSuggestion: (suggestion: string) => void;
-  dropdownWidth: string | number;
 }
 
 const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   suggestions,
   selectedIndex,
   selectSuggestion,
-  dropdownWidth,
 }) => {
   return (
-    <ul
-      className="absolute bg-white border rounded-b-xl shadow-sm z-10"
-      style={{ width: dropdownWidth }}
-    >
+    <ul className="absolute w-[calc(100%-7rem)] top-[55px] bg-white border rounded-b-xl shadow-sm z-10">
       {suggestions?.map((suggestion, index) => (
         <SuggestionItem
           key={suggestion}
