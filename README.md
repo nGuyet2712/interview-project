@@ -27,7 +27,7 @@ You need the following installed to run the application:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/nGuyet2712/interview-project.git
    ```
 
 2. Navigate to the project directory:
@@ -42,12 +42,24 @@ You need the following installed to run the application:
    npm install
    ```
 
+4. Only install "dependencies"
+
+```bash
+npm install --production
+```
+
 ### Running the Application
 
 To run the application locally, execute the following command:
 
 ```bash
 npm run dev
+```
+
+After that, the website will be available on
+
+```bash
+http://localhost:5173/
 ```
 
 ### Running tests

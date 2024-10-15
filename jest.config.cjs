@@ -9,5 +9,6 @@ module.exports = {
     "src/layouts/**/*.{ts,tsx}",
     "src/pages/**/*.{ts,tsx}",
     "src/services/**/*.{ts,tsx}",
+    "src/App.tsx",
   ],
 };

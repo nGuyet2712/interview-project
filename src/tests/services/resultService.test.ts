@@ -27,28 +27,14 @@ describe("fetchResults", () => {
       json: jest.fn().mockResolvedValueOnce({}),
     });
 
-    const result = await fetchResults();
-
-    expect(result).toEqual({
-      TotalNumberOfResults: 0,
-      Page: 1,
-      PageSize: 10,
-      ResultItems: [],
-    });
+    await expect(fetchResults()).rejects.toThrow("HTTP error! status: 404");
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   it("handles network errors gracefully", async () => {
     (fetch as jest.Mock).mockRejectedValueOnce(new Error("Network Error"));
 
-    const result = await fetchResults();
-
-    expect(result).toEqual({
-      TotalNumberOfResults: 0,
-      Page: 1,
-      PageSize: 10,
-      ResultItems: [],
-    });
+    await expect(fetchResults()).rejects.toThrow("Network Error");
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });

@@ -41,14 +41,12 @@ const fetchResults = async (): Promise<ResultsResponse> => {
     const results: ResultsResponse = await response.json();
     return results;
   } catch (error) {
-    console.error("Error fetching results:", error);
-
-    return {
-      TotalNumberOfResults: 0,
-      Page: 1,
-      PageSize: 10,
-      ResultItems: [],
-    };
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      console.error("Error fetching results:", error);
+      throw new Error("Something went wrong");
+    }
   }
 };
 

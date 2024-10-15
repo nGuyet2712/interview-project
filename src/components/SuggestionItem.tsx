@@ -36,7 +36,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({
   const parts = suggestion.split(regex);
   return (
     <li
-      className={`p-2 cursor-pointer ${
+      className={`list-item py-2 px-4 cursor-pointer ${
         index === selectedIndex ? "bg-blue-100" : ""
       }`}
       onClick={() => {

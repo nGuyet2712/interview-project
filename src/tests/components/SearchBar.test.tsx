@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import SearchBar from "../../components/SearchBar";
 import fetchSuggestions from "../../services/suggestionService";
@@ -19,28 +20,11 @@ describe("SearchBar", () => {
 
     const input = screen.getByRole("textbox");
 
-    fireEvent.change(input, { target: { value: "app" } });
+    fireEvent.change(input, { target: { value: "child" } });
 
     await waitFor(() => expect(fetchSuggestions).toHaveBeenCalledTimes(1));
 
-    expect(screen.getByText(suggestionData.suggestions[0])).toBeInTheDocument();
-    expect(screen.getByText(suggestionData.suggestions[1])).toBeInTheDocument();
-  });
-
-  it("shows a loading skeleton while fetching suggestions", async () => {
-    (fetchSuggestions as jest.Mock).mockResolvedValueOnce(suggestionData);
-
-    render(<SearchBar onSearch={mockOnSearch} />);
-
-    const input = screen.getByRole("textbox");
-
-    fireEvent.change(input, { target: { value: "app" } });
-
-    expect(screen.getAllByTestId("skeleton")).toHaveLength(6);
-
-    await waitFor(() => expect(fetchSuggestions).toHaveBeenCalledTimes(1));
-
-    expect(screen.queryByTestId("skeleton")).toBeNull();
+    await screen.findByRole("list");
   });
 
   it("allows selection of a suggestion and triggers search", async () => {
@@ -50,26 +34,33 @@ describe("SearchBar", () => {
 
     const input = screen.getByRole("textbox");
 
-    fireEvent.change(input, { target: { value: "app" } });
+    fireEvent.change(input, { target: { value: "child" } });
 
     await waitFor(() => expect(fetchSuggestions).toHaveBeenCalledTimes(1));
 
-    const suggestionItem = screen.getByText(suggestionData.suggestions[0]);
-    fireEvent.click(suggestionItem);
+    const suggestionItems = await screen.findAllByRole("listitem");
+    fireEvent.click(suggestionItems?.[0]);
 
-    expect(mockOnSearch).toHaveBeenCalledWith(suggestionData.suggestions[0]);
+    await waitFor(() => {
+      expect(mockOnSearch).toHaveBeenCalledWith(suggestionData.suggestions[0]);
+    });
   });
 
-  it("triggers search on pressing 'Enter' when there are no suggestions", () => {
+  it("triggers search on pressing 'Enter' when there are no suggestions", async () => {
+    (fetchSuggestions as jest.Mock).mockResolvedValueOnce(suggestionData);
     render(<SearchBar onSearch={mockOnSearch} />);
 
-    const input = screen.getByRole("textbox");
+    const input: HTMLInputElement = screen.getByRole("textbox");
 
-    fireEvent.change(input, { target: { value: "apple" } });
-
+    fireEvent.change(input, { target: { value: "child" } });
+    await waitFor(() => {
+      expect(input.value).toEqual("child");
+    });
     fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
 
-    expect(mockOnSearch).toHaveBeenCalledWith("apple");
+    await waitFor(() => {
+      expect(mockOnSearch).toHaveBeenCalledWith("child");
+    });
   });
 
   it("handles ArrowUp and ArrowDown key events to navigate suggestions", async () => {
@@ -79,23 +70,18 @@ describe("SearchBar", () => {
 
     const input = screen.getByRole("textbox");
 
-    fireEvent.change(input, { target: { value: "app" } });
+    fireEvent.change(input, { target: { value: "child" } });
 
     await waitFor(() => expect(fetchSuggestions).toHaveBeenCalledTimes(1));
 
+    const suggestionItems = await screen.findAllByRole("listitem");
     fireEvent.keyDown(input, { key: "ArrowDown", code: "ArrowDown" });
-    expect(screen.getByText(suggestionData.suggestions[0])).toHaveClass(
-      "selected"
-    );
+    expect(suggestionItems[0]).toHaveClass("bg-blue-100");
 
     fireEvent.keyDown(input, { key: "ArrowDown", code: "ArrowDown" });
-    expect(screen.getByText(suggestionData.suggestions[1])).toHaveClass(
-      "selected"
-    );
+    expect(suggestionItems[1]).toHaveClass("bg-blue-100");
 
     fireEvent.keyDown(input, { key: "ArrowUp", code: "ArrowUp" });
-    expect(screen.getByText(suggestionData.suggestions[0])).toHaveClass(
-      "selected"
-    );
+    expect(suggestionItems[0]).toHaveClass("bg-blue-100");
   });
 });

@@ -8,25 +8,28 @@ describe("ResultItem", () => {
   it("renders the title with highlights", () => {
     render(<ResultItem item={mockItem} />);
 
-    const titleHighlight = screen.getByText("Government", { selector: "span" });
+    const titleHighlight = screen.getByText("Child", { selector: "span" });
     expect(titleHighlight).toHaveClass("font-bold");
 
-    expect(screen.getByText("Services for Housing")).toBeInTheDocument();
+    expect(screen.getByText("Choose a Child Care Centre")).toBeInTheDocument();
   });
 
   it("renders the excerpt with highlights", () => {
     render(<ResultItem item={mockItem} />);
 
-    const excerptHighlight = screen.getByText("HDB", { selector: "span" });
+    const excerptHighlight = screen.getByText("child", { selector: "span" });
     expect(excerptHighlight).toHaveClass("font-bold");
 
     expect(
-      screen.getByText("Buy", { exact: false, selector: "p" })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("flats with ease using government services.", {
+      screen.getByText("Choosing a Child Care Centre for Your Child", {
         exact: false,
       })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "In choosing the appropriate child care arrangement, the age and personality of your child are important factors for consideration.",
+        { exact: false }
+      )
     ).toBeInTheDocument();
   });
 
@@ -34,12 +37,12 @@ describe("ResultItem", () => {
     render(<ResultItem item={mockItem} />);
 
     const link = screen.getByText(
-      "https://services.life.gov.sg/government-services/buy-hdb/"
+      "https://www.ecda.gov.sg/Parents/Pages/ParentsChooseCCC.aspx"
     );
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute(
       "href",
-      "https://services.life.gov.sg/government-services/buy-hdb/"
+      "https://www.ecda.gov.sg/Parents/Pages/ParentsChooseCCC.aspx"
     );
   });
 
@@ -47,23 +50,21 @@ describe("ResultItem", () => {
     const itemWithoutHighlights = {
       ...mockItem,
       DocumentTitle: {
-        Text: "Government Services for Housing",
+        Text: "Choose a Child Care Centre",
         Highlights: [],
       },
       DocumentExcerpt: {
-        Text: "Buy HDB flats with ease using government services.",
+        Text: "Choosing a Child Care Centre for Your Child.",
         Highlights: [],
       },
     };
 
     render(<ResultItem item={itemWithoutHighlights} />);
 
-    expect(
-      screen.getByText("Government Services for Housing")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Choose a Child Care Centre")).toBeInTheDocument();
 
     expect(
-      screen.getByText("Buy HDB flats with ease using government services.")
+      screen.getByText("Choosing a Child Care Centre for Your Child.")
     ).toBeInTheDocument();
   });
 });

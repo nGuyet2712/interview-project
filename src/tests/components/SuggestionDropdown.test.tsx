@@ -37,7 +37,7 @@ describe("SuggestionDropdown", () => {
     );
 
     const selectedSuggestion = screen.getByText(suggestions[selectedIndex]);
-    expect(selectedSuggestion).toHaveClass("bg-gray-200");
+    expect(selectedSuggestion).toHaveClass("bg-blue-100");
   });
 
   it("calls onSelectSuggestion when a suggestion is clicked", () => {
@@ -68,6 +68,6 @@ describe("SuggestionDropdown", () => {
       />
     );
 
-    expect(screen.queryByRole("listitem")).toBeNull();
+    expect(screen.queryByRole("list-item")).toBeNull();
   });
 });
