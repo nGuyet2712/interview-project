@@ -1,7 +1,7 @@
 import SuggestionItem from "./SuggestionItem";
 
 interface SuggestionDropdownProps {
-  suggestions: string[];
+  suggestions: string[] | null;
   selectedIndex: number;
   onSelectSuggestion: (suggestion: string) => void;
   onSearch: (value: string) => void;
@@ -27,7 +27,7 @@ const SuggestionDropdown: React.FC<SuggestionDropdownProps> = ({
   input,
 }) => {
   return (
-    <ul className="absolute w-[calc(100%-7rem)] top-[55px] bg-white border rounded-b-xl shadow-sm z-10">
+    <ul className="absolute w-[calc(100%-7rem)] top-[56px] bg-white border rounded-b-xl shadow-sm z-1">
       {suggestions?.map((suggestion, index) => (
         <SuggestionItem
           key={suggestion}

@@ -33,13 +33,15 @@ const ResultsList = ({
         <>
           <p className="font-semibold text-[22px]">
             {results
-              ? `Showing ${results.TotalNumberOfResults ? 1 : 0} - ${
-                  results.TotalNumberOfResults
-                } of ${results.TotalNumberOfResults} results`
+              ? results.TotalNumberOfResults === 0
+                ? "No result found"
+                : `Showing 1 - ${results.ResultItems?.length || 0} of ${
+                    results.TotalNumberOfResults
+                  } results`
               : ""}
           </p>
           <ul className="space-y-12">
-            {results?.ResultItems.map((item) => (
+            {results?.ResultItems?.map((item) => (
               <ResultItem key={item.DocumentId} item={item} />
             ))}
           </ul>

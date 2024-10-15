@@ -1,6 +1,8 @@
+import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import ResultsList from "../../../pages/result-page/index";
 import ResultData from "../../../mock/queryResult.json";
+import "@testing-library/jest-dom";
 
 jest.mock("../../../pages/result-page/components/ResultItem", () => () => (
   <div>Mocked ResultItem</div>
@@ -40,7 +42,7 @@ describe("ResultsList", () => {
 
     render(<ResultsList results={emptyResults} isLoading={false} />);
 
-    expect(screen.getByText("Showing 0-0 of 0 results")).toBeInTheDocument();
+    expect(screen.getByText("No result found")).toBeInTheDocument();
 
     expect(screen.queryByText("Mocked ResultItem")).toBeNull();
   });

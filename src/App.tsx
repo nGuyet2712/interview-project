@@ -15,19 +15,9 @@ function App(): React.ReactElement {
     null
   );
   const [isLoadingResults, setIsLoadingResults] = useState<boolean>(false);
+  const [resultError, setResultError] = useState<string>("");
 
-  /*
-  Perform a search operation asynchronously based on a given search term.
-  1. Set the loading state (`setIsLoadingResults`) to `true` to indicate the search is in progress.
-  2. Fetch the results from `fetchResults()` service.
-  3. Filter the fetched results based on the provided search term by checking if the term exists insensitively
-     in either the `DocumentTitle.Text` or `DocumentExcerpt.Text` fields.
-  4. After filtering, update the search results state (`setSearchResults`) with:
-     - The total number of filtered results.
-     - The filtered result items.
-  5. If there is an error during the fetch operation, log the error to the console.
-  6. Set the loading state (`setIsLoadingResults`) to `false` to indicate the search has completed.
-*/
+  // Perform async search, filter results by term in 'DocumentTitle.Text' or 'DocumentExcerpt.Text', and update state with total results.
   const handleSearch = async (term: string) => {
     setIsLoadingResults(true);
     try {
@@ -40,7 +30,9 @@ function App(): React.ReactElement {
         TotalNumberOfResults: filteredResults.length,
         ResultItems: filteredResults,
       });
+      setResultError("");
     } catch (error) {
+      setResultError("No network connection");
       console.error("Error fetching search results:", error);
     }
     setIsLoadingResults(false);
@@ -49,7 +41,13 @@ function App(): React.ReactElement {
   return (
     <AppLayout>
       <SearchBar onSearch={handleSearch} />
-      <ResultsList results={searchResults} isLoading={isLoadingResults} />
+      {resultError ? (
+        <div className="md:px-[160px] sm:px-[80px] px-[30px] bg-white">
+          <p className="font-semibold text-[22px]">{resultError}</p>
+        </div>
+      ) : (
+        <ResultsList results={searchResults} isLoading={isLoadingResults} />
+      )}
     </AppLayout>
   );
 }
