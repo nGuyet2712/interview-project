@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "../App";
 import fetchResults from "../services/resultService";
-import ResultsResponse from "../../queryResult.json";
+import ResultsResponse from "../mock/queryResult.json";
 import "@testing-library/jest-dom";
 
 jest.mock("./services/resultService");

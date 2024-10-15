@@ -1,50 +1,63 @@
-# React + TypeScript + Vite
+# Search Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a single-page web application built using ReactJS and TypeScript, which allows users to search for content and display search results with typeahead suggestions. This project was created using **Vite** for a fast development experience and **Jest** for unit testing.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Getting Started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Installing](#installing)
+- [Running the Application](#running-the-application)
+- [Running Tests](#running-tests)
+- [Note](#note)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Follow the instructions below to set up and run the application locally on your machine.
 
-- Configure the top-level `parserOptions` property like this:
+### Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+You need the following installed to run the application:
+
+- [Node.js](https://nodejs.org/) (version 16 or above)
+- [npm](https://www.npmjs.com/) (comes bundled with Node.js)
+
+### Installing
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd dcb9d012863d12e963f264ba592880b8
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+### Running the Application
+
+To run the application locally, execute the following command:
+
+```bash
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Running tests
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+To run tests, execute the following command:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm run test
 ```
+
+### Note
+
+There are some features may be considered to be additional ones comparing to [The requirement](https://gist.github.com/yuhong90/b5544baebde4bfe9fe2d12e8e5502cbf). The suggestions and results have been filter based on the input value.
